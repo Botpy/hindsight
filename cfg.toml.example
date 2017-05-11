@@ -1,0 +1,22 @@
+# vi:ft=toml
+[server]
+
+# Debug mode
+debug = false
+
+listen = "0.0.0.0:9100"
+
+[github]
+
+# A GitHub personal access token
+access_token = ""
+
+[repo.NAME]
+
+# github.com/<owner>/<name>
+owner = ""
+name = ""
+
+# arbitrary ci secret (e.g. openssl rand -hex 20)
+# The secret must keep unique with others.
+secret = ""
