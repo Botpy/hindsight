@@ -12,7 +12,7 @@ from tornado import httpserver
 from tornado import ioloop
 from tornado import log
 
-from asycat.client import AsyncGithubClient
+from asyncat.client import AsyncGithubClient
 
 from . import deployment
 
