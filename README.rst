@@ -1,7 +1,7 @@
 Hindsight
 =========
 
-Becase of this `PR<https://github.com/servo/homu/pull/96>`_ and created this project.
+Becase of this `PR <https://github.com/servo/homu/pull/96>`_ and created this project.
 
 Report something after a pull request has merged. Such as
 
