@@ -20,3 +20,5 @@ name = ""
 # arbitrary ci secret (e.g. openssl rand -hex 20)
 # The secret must keep unique with others.
 secret = ""
+
+# builder = ""

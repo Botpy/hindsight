@@ -12,6 +12,7 @@ from tornado import gen
 from tornado.log import gen_log
 
 from asyncat.repository import Repository
+from asyncat.client import GithubError
 
 
 class BuildStatus(enum.Enum):
@@ -30,6 +31,12 @@ class BaseCIBuild(object):
         """
         self.payload = payload
         self.prepare()
+
+    def get_name(self):
+        """Returns the name of current builder.  Returns ``None`` if current
+        CI do not support.
+        """
+        raise NotImplementedError()
 
     def get_status(self):
         """Returns the status of current build.
@@ -71,7 +78,11 @@ class BuildbotBuild(BaseCIBuild):
         self.event = self.payload["event"]
         self.info = self.payload["payload"]["build"]
         self.properties = dict(x[:2] for x in self.info['properties'])
-        self.sha = self.properties["revision"]
+        self.sha = (self.properties["revision"] or
+                    self.properties.get("got_revision"))
+
+    def get_name(self):
+        return self.properties["buildername"]
 
     def get_status(self):
         if self.event == "buildFinished":
@@ -97,35 +108,64 @@ class BuildbotWebhook(BaseCIWebhook):
 
     def iter_builds(self):
         packets = json.loads(self.handler.get_argument("packets"))
-
         for payload in packets:
-            yield BuildbotBuild(payload)
+            if payload["event"] not in ["buildStarted", "buildFinished"]:
+                continue
+
+            build = BuildbotBuild(payload)
+            if not build.get_sha():
+                continue
+            yield build
 
 
 class DeploymentHandler(web.RequestHandler):
     @gen.coroutine
     def post(self):
         hook = BuildbotWebhook(self)
+
+        for build in hook.iter_builds():
+            yield self._on_build(hook, build)
+
+    def _get_repo(self, hook, build):
+        """Returns :class:`asyncat.repository.Repository` via
+        :class:`BaseCIWebhook` and :class:`BaseCIBuild`.
+        """
+
         secret = hook.get_secret()
 
         try:
-            config = self.application.find_repo_config(secret)
+            config = self.application.find_repo_config(secret,
+                                                       build.get_name())
         except KeyError:
             gen_log.warn("Could not find config with secret: %s.", secret)
             self.write("Secret mismatch.")
             self.set_status(403)
             return
 
-        repo = Repository(self.github_client, config["owner"], config["name"])
+        return Repository(self.application.github_client, config["owner"],
+                          config["name"])
 
-        futures = []
+    @gen.coroutine
+    def _on_build(self, hook, build):
+        repo = self._get_repo(hook, build)
 
-        for build in hook.iter_builds():
-            pull = self._find_pull(repo, build)
-            futures.append(pull.create_comment(
-                "Deployment status {}".format(build.get_status())))
+        if repo is None:
+            return
 
-        yield futures
+        gen_log.info("Try find pull requset via %s", build.get_sha())
+
+        try:
+            pull = yield self._find_pull(repo, build)
+        except GithubError:
+            gen_log.error("Could not find any pull request via %s",
+                          build.get_sha(), exc_info=True)
+            return
+
+        gen_log.info("Find pull request <%s> via %s", pull.num,
+                     build.get_sha())
+
+        comment = "Deployment status {}".format(build.get_status())
+        yield pull.create_comment(comment)
 
     @gen.coroutine
     def _find_pull(self, repo, build):

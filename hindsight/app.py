@@ -4,6 +4,7 @@
 from __future__ import print_function, division, unicode_literals
 
 import sys
+import collections
 
 import toml
 
@@ -24,6 +25,14 @@ class Application(web.Application):
         with open(config_file) as f:
             self.config = toml.load(f)
 
+        self._secret_builder_to_repo = collections.defaultdict(dict)
+
+        for name, config in self.config["repo"].items():
+            secret = config["secret"]
+            builder = config.get("builder")
+
+            self._secret_builder_to_repo[secret][builder] = name
+
         self._secrets_map = {
             config["secret"]: name
             for name, config in self.config["repo"].items()
@@ -38,9 +47,10 @@ class Application(web.Application):
             ],
             **self.config["server"])
 
-    def find_repo_config(self, secret):
-        """Use secret to find repo config."""
-        return self.config["repo"][self._secrets_map[secret]]
+    def find_repo_config(self, secret, builder=None):
+        """Use secret and builder to find repo config."""
+        name = self._secret_builder_to_repo[secret][builder]
+        return self.config["repo"][name]
 
 
 def main():
