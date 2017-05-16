@@ -65,5 +65,4 @@ local_settings.py
 .idea/
 
 # config file
-config.toml
-main.db
+cfg.toml
