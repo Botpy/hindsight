@@ -1,0 +1,784 @@
+[
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:22.701100",
+    "event": "requestSubmitted",
+    "project": "Pyflakes",
+    "id": 14,
+    "payload": {
+      "request": {
+        "builderName": "rundeploy"
+      }
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:22.711002",
+    "event": "buildsetSubmitted",
+    "project": "Pyflakes",
+    "id": 15,
+    "payload": {
+      "buildset": {
+        "reason": "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': ",
+        "bsid": 2,
+        "sourcestampsetid": 2,
+        "submitted_at": "2017-05-13 05:31:22.693166+00:00",
+        "results": -1
+      }
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:22.790715",
+    "event": "builderChangedState",
+    "project": "Pyflakes",
+    "id": 16,
+    "payload": {
+      "state": "building",
+      "builderName": "rundeploy"
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:22.803877",
+    "event": "buildStarted",
+    "project": "Pyflakes",
+    "id": 17,
+    "payload": {
+      "build": {
+        "slave": "example-slave",
+        "builderName": "rundeploy",
+        "sourceStamps": [
+          {
+            "revision": "235f37b19e0cf864e2801714d0392bfe42025b72"
+          }
+        ],
+        "number": 2,
+        "times": [
+          1494653482.803791,
+          null
+        ],
+        "reason": "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': ",
+        "eta": 303.608788728714,
+        "steps": [
+          {
+            "name": "git",
+            "expectations": [
+              [
+                "output",
+                null,
+                8886
+              ]
+            ]
+          },
+          {
+            "step_number": 1,
+            "name": "shell",
+            "expectations": [
+              [
+                "output",
+                null,
+                2094
+              ]
+            ]
+          }
+        ],
+        "properties": [
+          [
+            "branch",
+            "",
+            "Build"
+          ],
+          [
+            "builddir",
+            "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+            "slave"
+          ],
+          [
+            "buildername",
+            "rundeploy",
+            "Builder"
+          ],
+          [
+            "buildnumber",
+            2,
+            "Build"
+          ],
+          [
+            "codebase",
+            "",
+            "Build"
+          ],
+          [
+            "owner",
+            "pyflakes <pyflakes@localhost>",
+            "Force Build Form"
+          ],
+          [
+            "owners",
+            [
+              "pyflakes <pyflakes@localhost>"
+            ],
+            "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+          ],
+          [
+            "project",
+            "",
+            "Build"
+          ],
+          [
+            "reason",
+            "force build",
+            "Force Build Form"
+          ],
+          [
+            "repository",
+            "",
+            "Build"
+          ],
+          [
+            "revision",
+            "235f37b19e0cf864e2801714d0392bfe42025b72",
+            "Build"
+          ],
+          [
+            "scheduler",
+            "force",
+            "Scheduler"
+          ],
+          [
+            "slavename",
+            "example-slave",
+            "BuildSlave"
+          ],
+          [
+            "workdir",
+            "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+            "slave (deprecated)"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:22.806416",
+    "event": "stepStarted",
+    "project": "Pyflakes",
+    "id": 18,
+    "payload": {
+      "step": {
+        "name": "git",
+        "text": [
+          "updating"
+        ],
+        "expectations": [
+          [
+            "output",
+            null,
+            8886
+          ]
+        ],
+        "isStarted": true,
+        "times": [
+          1494653482.806323,
+          null
+        ],
+        "eta": 303.5854058265686
+      },
+      "properties": [
+        [
+          "branch",
+          "",
+          "Build"
+        ],
+        [
+          "builddir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave"
+        ],
+        [
+          "buildername",
+          "rundeploy",
+          "Builder"
+        ],
+        [
+          "buildnumber",
+          2,
+          "Build"
+        ],
+        [
+          "codebase",
+          "",
+          "Build"
+        ],
+        [
+          "owner",
+          "pyflakes <pyflakes@localhost>",
+          "Force Build Form"
+        ],
+        [
+          "owners",
+          [
+            "pyflakes <pyflakes@localhost>"
+          ],
+          "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+        ],
+        [
+          "project",
+          "",
+          "Build"
+        ],
+        [
+          "reason",
+          "force build",
+          "Force Build Form"
+        ],
+        [
+          "repository",
+          "",
+          "Build"
+        ],
+        [
+          "revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Build"
+        ],
+        [
+          "scheduler",
+          "force",
+          "Scheduler"
+        ],
+        [
+          "slavename",
+          "example-slave",
+          "BuildSlave"
+        ],
+        [
+          "workdir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave (deprecated)"
+        ]
+      ]
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:23.168042",
+    "event": "stepFinished",
+    "project": "Pyflakes",
+    "id": 19,
+    "payload": {
+      "step": {
+        "name": "git",
+        "isFinished": true,
+        "text": [
+          "update"
+        ],
+        "expectations": [
+          [
+            "output",
+            8880,
+            8886
+          ]
+        ],
+        "isStarted": true,
+        "times": [
+          1494653482.806323,
+          1494653483.167744
+        ],
+        "logs": [
+          [
+            "stdio",
+            "http://localhost:8010/builders/rundeploy/builds/2/steps/git/logs/stdio"
+          ]
+        ]
+      },
+      "properties": [
+        [
+          "branch",
+          "",
+          "Build"
+        ],
+        [
+          "builddir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave"
+        ],
+        [
+          "buildername",
+          "rundeploy",
+          "Builder"
+        ],
+        [
+          "buildnumber",
+          2,
+          "Build"
+        ],
+        [
+          "codebase",
+          "",
+          "Build"
+        ],
+        [
+          "got_revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Git"
+        ],
+        [
+          "owner",
+          "pyflakes <pyflakes@localhost>",
+          "Force Build Form"
+        ],
+        [
+          "owners",
+          [
+            "pyflakes <pyflakes@localhost>"
+          ],
+          "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+        ],
+        [
+          "project",
+          "",
+          "Build"
+        ],
+        [
+          "reason",
+          "force build",
+          "Force Build Form"
+        ],
+        [
+          "repository",
+          "",
+          "Build"
+        ],
+        [
+          "revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Build"
+        ],
+        [
+          "scheduler",
+          "force",
+          "Scheduler"
+        ],
+        [
+          "slavename",
+          "example-slave",
+          "BuildSlave"
+        ],
+        [
+          "workdir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave (deprecated)"
+        ]
+      ]
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:23.171814",
+    "event": "stepStarted",
+    "project": "Pyflakes",
+    "id": 20,
+    "payload": {
+      "step": {
+        "name": "shell",
+        "text": [
+          "'echo",
+          "deploy'"
+        ],
+        "expectations": [
+          [
+            "output",
+            null,
+            2094
+          ]
+        ],
+        "isStarted": true,
+        "times": [
+          1494653483.171755,
+          null
+        ],
+        "eta": 0.023385047912597656,
+        "step_number": 1
+      },
+      "properties": [
+        [
+          "branch",
+          "",
+          "Build"
+        ],
+        [
+          "builddir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave"
+        ],
+        [
+          "buildername",
+          "rundeploy",
+          "Builder"
+        ],
+        [
+          "buildnumber",
+          2,
+          "Build"
+        ],
+        [
+          "codebase",
+          "",
+          "Build"
+        ],
+        [
+          "got_revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Git"
+        ],
+        [
+          "owner",
+          "pyflakes <pyflakes@localhost>",
+          "Force Build Form"
+        ],
+        [
+          "owners",
+          [
+            "pyflakes <pyflakes@localhost>"
+          ],
+          "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+        ],
+        [
+          "project",
+          "",
+          "Build"
+        ],
+        [
+          "reason",
+          "force build",
+          "Force Build Form"
+        ],
+        [
+          "repository",
+          "",
+          "Build"
+        ],
+        [
+          "revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Build"
+        ],
+        [
+          "scheduler",
+          "force",
+          "Scheduler"
+        ],
+        [
+          "slavename",
+          "example-slave",
+          "BuildSlave"
+        ],
+        [
+          "workdir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave (deprecated)"
+        ]
+      ]
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:23.196385",
+    "event": "stepFinished",
+    "project": "Pyflakes",
+    "id": 21,
+    "payload": {
+      "step": {
+        "name": "shell",
+        "isFinished": true,
+        "text": [
+          "'echo",
+          "deploy'"
+        ],
+        "expectations": [
+          [
+            "output",
+            2094,
+            2094
+          ]
+        ],
+        "isStarted": true,
+        "times": [
+          1494653483.171755,
+          1494653483.196267
+        ],
+        "step_number": 1,
+        "logs": [
+          [
+            "stdio",
+            "http://localhost:8010/builders/rundeploy/builds/2/steps/shell/logs/stdio"
+          ]
+        ]
+      },
+      "properties": [
+        [
+          "branch",
+          "",
+          "Build"
+        ],
+        [
+          "builddir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave"
+        ],
+        [
+          "buildername",
+          "rundeploy",
+          "Builder"
+        ],
+        [
+          "buildnumber",
+          2,
+          "Build"
+        ],
+        [
+          "codebase",
+          "",
+          "Build"
+        ],
+        [
+          "got_revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Git"
+        ],
+        [
+          "owner",
+          "pyflakes <pyflakes@localhost>",
+          "Force Build Form"
+        ],
+        [
+          "owners",
+          [
+            "pyflakes <pyflakes@localhost>"
+          ],
+          "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+        ],
+        [
+          "project",
+          "",
+          "Build"
+        ],
+        [
+          "reason",
+          "force build",
+          "Force Build Form"
+        ],
+        [
+          "repository",
+          "",
+          "Build"
+        ],
+        [
+          "revision",
+          "235f37b19e0cf864e2801714d0392bfe42025b72",
+          "Build"
+        ],
+        [
+          "scheduler",
+          "force",
+          "Scheduler"
+        ],
+        [
+          "slavename",
+          "example-slave",
+          "BuildSlave"
+        ],
+        [
+          "workdir",
+          "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+          "slave (deprecated)"
+        ]
+      ]
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:23.198057",
+    "event": "buildFinished",
+    "project": "Pyflakes",
+    "id": 22,
+    "payload": {
+      "build": {
+        "slave": "example-slave",
+        "logs": [
+          [
+            "stdio",
+            "http://localhost:8010/builders/rundeploy/builds/2/steps/git/logs/stdio"
+          ],
+          [
+            "stdio",
+            "http://localhost:8010/builders/rundeploy/builds/2/steps/shell/logs/stdio"
+          ]
+        ],
+        "builderName": "rundeploy",
+        "text": [
+          "build",
+          "successful"
+        ],
+        "sourceStamps": [
+          {
+            "revision": "235f37b19e0cf864e2801714d0392bfe42025b72"
+          }
+        ],
+        "number": 2,
+        "times": [
+          1494653482.803791,
+          1494653483.197152
+        ],
+        "reason": "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': ",
+        "steps": [
+          {
+            "name": "git",
+            "isFinished": true,
+            "text": [
+              "update"
+            ],
+            "expectations": [
+              [
+                "output",
+                8880,
+                8886
+              ]
+            ],
+            "isStarted": true,
+            "times": [
+              1494653482.806323,
+              1494653483.167744
+            ],
+            "logs": [
+              [
+                "stdio",
+                "http://localhost:8010/builders/rundeploy/builds/2/steps/git/logs/stdio"
+              ]
+            ]
+          },
+          {
+            "name": "shell",
+            "isFinished": true,
+            "text": [
+              "'echo",
+              "deploy'"
+            ],
+            "expectations": [
+              [
+                "output",
+                2094,
+                2094
+              ]
+            ],
+            "isStarted": true,
+            "times": [
+              1494653483.171755,
+              1494653483.196267
+            ],
+            "step_number": 1,
+            "logs": [
+              [
+                "stdio",
+                "http://localhost:8010/builders/rundeploy/builds/2/steps/shell/logs/stdio"
+              ]
+            ]
+          }
+        ],
+        "properties": [
+          [
+            "branch",
+            "",
+            "Build"
+          ],
+          [
+            "builddir",
+            "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+            "slave"
+          ],
+          [
+            "buildername",
+            "rundeploy",
+            "Builder"
+          ],
+          [
+            "buildnumber",
+            2,
+            "Build"
+          ],
+          [
+            "codebase",
+            "",
+            "Build"
+          ],
+          [
+            "got_revision",
+            "235f37b19e0cf864e2801714d0392bfe42025b72",
+            "Git"
+          ],
+          [
+            "owner",
+            "pyflakes <pyflakes@localhost>",
+            "Force Build Form"
+          ],
+          [
+            "owners",
+            [
+              "pyflakes <pyflakes@localhost>"
+            ],
+            "The web-page 'rebuild' button was pressed by 'pyflakes <pyflakes@localhost>': "
+          ],
+          [
+            "project",
+            "",
+            "Build"
+          ],
+          [
+            "reason",
+            "force build",
+            "Force Build Form"
+          ],
+          [
+            "repository",
+            "",
+            "Build"
+          ],
+          [
+            "revision",
+            "235f37b19e0cf864e2801714d0392bfe42025b72",
+            "Build"
+          ],
+          [
+            "scheduler",
+            "force",
+            "Scheduler"
+          ],
+          [
+            "slavename",
+            "example-slave",
+            "BuildSlave"
+          ],
+          [
+            "workdir",
+            "/Users/wh/tmp/buildbot/8/slave/rundeploy",
+            "slave (deprecated)"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "started": "2017-05-13 04:51:53.178987",
+    "timestamp": "2017-05-13 05:31:23.200244",
+    "event": "builderChangedState",
+    "project": "Pyflakes",
+    "id": 23,
+    "payload": {
+      "state": "idle",
+      "builderName": "rundeploy"
+    }
+  }
+]
