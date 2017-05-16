@@ -63,8 +63,11 @@ class BaseCIWebhook(object):
         """
         self.handler = handler
 
-    def iter_builds(self):
-        """Iterates builds in current hook."""
+    def make_build(self):
+        """Returns a object that represents a build.
+
+        :rtype: :class:`BaseCIBuild`
+        """
         raise NotImplementedError()
 
     def get_secret(self):
@@ -107,6 +110,10 @@ class BuildbotWebhook(BaseCIWebhook):
         return self.handler.get_argument("secret")
 
     def iter_builds(self):
+        """Iterates builds.
+
+        :rtype: :class:`BuildbotBuild`
+        """
         packets = json.loads(self.handler.get_argument("packets"))
         for payload in packets:
             if payload["event"] not in ["buildStarted", "buildFinished"]:
@@ -117,14 +124,38 @@ class BuildbotWebhook(BaseCIWebhook):
                 continue
             yield build
 
+    def make_build(self):
+        """Make :class:`BuildbotBuild`.
+
+        :rtype: :class:`BuildbotBuild`
+        """
+
+        started_build = None
+        finished_build = None
+
+        for build in self.iter_builds():
+            status = build.get_status()
+            if status is BuildStatus.pending:
+                started_build = build
+            elif status in [BuildStatus.success, BuildStatus.failure]:
+                finished_build = build
+
+        # Buildbot pushs all event in one payload, so we need to skip
+        # started event if payload includes finished event.
+        return finished_build or started_build
+
 
 class DeploymentHandler(web.RequestHandler):
     @gen.coroutine
     def post(self):
         hook = BuildbotWebhook(self)
 
-        for build in hook.iter_builds():
+        build = hook.make_build()
+
+        if build is not None:
             yield self._on_build(hook, build)
+
+        self.write("OK")
 
     def _get_repo(self, hook, build):
         """Returns :class:`asyncat.repository.Repository` via
@@ -139,8 +170,7 @@ class DeploymentHandler(web.RequestHandler):
         except KeyError:
             gen_log.warn("Could not find config with secret: %s.", secret)
             self.write("Secret mismatch.")
-            self.set_status(403)
-            return
+            raise web.HTTPError(403)
 
         return Repository(self.application.github_client, config["owner"],
                           config["name"])
@@ -149,42 +179,43 @@ class DeploymentHandler(web.RequestHandler):
     def _on_build(self, hook, build):
         repo = self._get_repo(hook, build)
 
-        if repo is None:
-            return
-
-        gen_log.info("Try find pull requset via %s", build.get_sha())
+        gen_log.info("Try find pull requset via %s in %s/%s", build.get_sha(),
+                     repo.owner, repo.label)
 
         try:
-            pull = yield self._find_pull(repo, build)
-        except GithubError:
-            gen_log.error("Could not find any pull request via %s",
-                          build.get_sha(), exc_info=True)
-            return
+            pull = yield self._find_pull(repo, build.get_sha())
+        except (GithubError, ValueError):
+            gen_log.error("Could not find any pull request via %s in %s/%s",
+                          build.get_sha(), repo.owner, repo.label,
+                          exc_info=True)
+            raise web.HTTPError(404)
 
-        gen_log.info("Find pull request <%s> via %s", pull.num,
-                     build.get_sha())
+        gen_log.info("Found pull request #%s via %s in %s/%s", pull.num,
+                     build.get_sha(), repo.owner, repo.label)
 
         comment = "Deployment status {}".format(build.get_status())
         yield pull.create_comment(comment)
 
     @gen.coroutine
-    def _find_pull(self, repo, build):
-        """Find pull reuqest via build.
+    def _find_pull(self, repo, sha):
+        """Find pull reuqest via commit sha.
 
         :type repo: :class:`asyncat.repository.Repository`
-        :type build: :class:`BaseCIBuild`
+        :param str sha: commit sha
         """
         # Try use build's sha to find pull request.
-        resp = yield repo.search_pulls(build.get_sha())
+        resp = yield repo.search_pulls(sha)
         if resp.data["total_count"] == 1:
             pull = yield repo.pull(resp.data["items"][0]["number"])
             raise gen.Return(pull)
 
         # Try use parent commit to find pull request.
-        commit = yield repo.commit(build.get_sha())
+        commit = yield repo.commit(sha)
 
         for parent in commit.c["parents"]:
             resp = yield repo.search_pulls(parent["sha"])
             if resp.data["total_count"] == 1:
                 pull = yield repo.pull(resp.data["items"][0]["number"])
                 raise gen.Return(pull)
+
+        raise ValueError()
