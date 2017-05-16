@@ -16,22 +16,38 @@ Implements this by using the search api to find which pull request the commit be
 Usage
 ------
 
-Install in virtualenv
+How to install
+^^^^^^^^^^^^^^^^
 
 .. code:: shell
-
+    $ git clone https://github.com/coldnight/hindsight
+    $ cd hindsight
     $ virtualenv .venv
     $ . .venv/bin/action
     $ pip install -U -r requirements.txt
 
-Copy config file
 
-.. code:: shell
+How to configure
+^^^^^^^^^^^^^^^^^^
 
-    $ cp cfg.toml.example cfg.toml
-    $ $EDITOR cfg.toml
+1. Copy `cfg.toml.example` to `cfg.toml`, and edit it accordingly.
+2. Add a Webhook to your continuous integration service:
 
-Run server
+    hindsight supports deployment via buildbot, insert the following code to the `master.cfg` file:
+
+    ```python
+    from buildbot.status.status_push import HttpStatusPush
+
+    c['status'].append(HttpStatusPush(
+        serverUrl='http://HOST:PORT/deployment',
+        extra_post_params={'secret': 'repo.NAME.secret in cfg.toml'},
+    ))
+    ```
+
+
+
+How to run
+^^^^^^^^^^^
 
 .. code:: shell
 
