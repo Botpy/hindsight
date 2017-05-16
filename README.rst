@@ -24,7 +24,7 @@ How to install
     $ git clone https://github.com/coldnight/hindsight
     $ cd hindsight
     $ virtualenv .venv
-    $ . .venv/bin/action
+    $ . .venv/bin/activate
     $ pip install -U -r requirements.txt
 
 
