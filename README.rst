@@ -1,7 +1,7 @@
 Hindsight
 =========
 
-Becase of this [PR](https://github.com/servo/homu/pull/96) and created this project.
+Becase of this `PR<https://github.com/servo/homu/pull/96>`_ and created this project.
 
 Report something after a pull request has merged. Such as
 
@@ -18,20 +18,21 @@ Usage
 
 Install in virtualenv
 
-```shell
-$ virtualenv .venv
-$ . .venv/bin/action
-$ pip install -U -r requirements.txt
-```
+.. code:: shell
+
+    $ virtualenv .venv
+    $ . .venv/bin/action
+    $ pip install -U -r requirements.txt
 
 Copy config file
 
-```shell
-$ cp cfg.toml.example cfg.toml
-$ $EDITOR cfg.toml
-```
+.. code:: shell
+
+    $ cp cfg.toml.example cfg.toml
+    $ $EDITOR cfg.toml
 
 Run server
-```shell
-python -m hindsight.app cfg.toml
-```
+
+.. code:: shell
+
+    python -m hindsight.app cfg.toml
