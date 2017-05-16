@@ -184,11 +184,13 @@ class DeploymentHandler(web.RequestHandler):
 
         try:
             pull = yield self._find_pull(repo, build.get_sha())
-        except (GithubError, ValueError):
+        except (GithubError, ValueError) as e:
             gen_log.error("Could not find any pull request via %s in %s/%s",
                           build.get_sha(), repo.owner, repo.label,
                           exc_info=True)
-            raise web.HTTPError(404)
+            if isinstance(e, GithubError):
+                raise web.HTTPError(404)
+            return
 
         gen_log.info("Found pull request #%s via %s in %s/%s", pull.num,
                      build.get_sha(), repo.owner, repo.label)
