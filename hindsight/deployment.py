@@ -36,18 +36,18 @@ class BaseCIBuild(object):
         """Returns the name of current builder.  Returns ``None`` if current
         CI do not support.
         """
-        raise NotImplementedError()
+        raise NotImplementedError()     # pragma: no cover
 
     def get_status(self):
         """Returns the status of current build.
 
         :rtype: :class:`BuildStatus`
         """
-        raise NotImplementedError()
+        raise NotImplementedError()     # pragma: no cover
 
     def get_sha(self):
         """Returns the sha of current build."""
-        raise NotImplementedError()
+        raise NotImplementedError()     # pragma: no cover
 
     def is_valid(self):
         """Returns True if current build is valid."""
@@ -68,7 +68,7 @@ class BaseCIWebhook(object):
 
         :rtype: :class:`BaseCIBuild`
         """
-        raise NotImplementedError()
+        raise NotImplementedError()     # pragma: no cover
 
     def get_secret(self):
         """Returns secret in request."""
@@ -177,14 +177,16 @@ class DeploymentHandler(web.RequestHandler):
 
     @gen.coroutine
     def _on_build(self, hook, build):
+        from .app import NoSuchPullRequest
+
         repo = self._get_repo(hook, build)
 
         gen_log.info("Try find pull requset via %s in %s/%s", build.get_sha(),
                      repo.owner, repo.label)
 
         try:
-            pull = yield self._find_pull(repo, build.get_sha())
-        except (GithubError, ValueError) as e:
+            pull = yield self.application.find_pull(repo, build.get_sha())
+        except (GithubError, NoSuchPullRequest) as e:
             gen_log.error("Could not find any pull request via %s in %s/%s",
                           build.get_sha(), repo.owner, repo.label,
                           exc_info=True)
@@ -197,27 +199,3 @@ class DeploymentHandler(web.RequestHandler):
 
         comment = "Deployment status {}".format(build.get_status())
         yield pull.create_comment(comment)
-
-    @gen.coroutine
-    def _find_pull(self, repo, sha):
-        """Find pull reuqest via commit sha.
-
-        :type repo: :class:`asyncat.repository.Repository`
-        :param str sha: commit sha
-        """
-        # Try use build's sha to find pull request.
-        resp = yield repo.search_pulls(sha)
-        if resp.data["total_count"] == 1:
-            pull = yield repo.pull(resp.data["items"][0]["number"])
-            raise gen.Return(pull)
-
-        # Try use parent commit to find pull request.
-        commit = yield repo.commit(sha)
-
-        for parent in commit.c["parents"]:
-            resp = yield repo.search_pulls(parent["sha"])
-            if resp.data["total_count"] == 1:
-                pull = yield repo.pull(resp.data["items"][0]["number"])
-                raise gen.Return(pull)
-
-        raise ValueError()

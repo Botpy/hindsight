@@ -8,6 +8,7 @@ import collections
 
 import toml
 
+from tornado import gen
 from tornado import web
 from tornado import httpserver
 from tornado import ioloop
@@ -16,6 +17,60 @@ from tornado import log
 from asyncat.client import AsyncGithubClient
 
 from . import deployment
+
+
+class NoSuchPullRequest(Exception):
+    pass
+
+
+class PullRequestFinder(object):
+    """Find pull request via commit sha."""
+    def __init__(self, repo, sha):
+        """Initialize
+
+        :type repo: :class:`asyncat.repository.Repository`
+        :param str sha: commit sha
+        """
+        self.repo = repo
+        self.sha = sha
+
+    @gen.coroutine
+    def _find(self, sha):
+        """Find pull reuqest via commit sha.
+
+        :param str sha: commit sha
+        :rtype: :class:`asyncat.Repository.PullRequest`
+        """
+        # Try use build's sha to find pull request.
+        resp = yield self.repo.search_pulls(sha)
+        print(resp.data)
+        if resp.data["total_count"] == 1:
+            pull = yield self.repo.pull(resp.data["items"][0]["number"])
+            raise gen.Return(pull)
+
+    @gen.coroutine
+    def find(self):
+        pull = yield self._find(self.sha)
+
+        if pull is None:
+            # Try use parent commit to find pull request.
+            commit = yield self.repo.commit(self.sha)
+
+            for parent in commit.c["parents"]:
+                print(parent["sha"])
+                log.gen_log.info("Try use <%s> parent commit <%s> find pull",
+                                 self.sha, parent["sha"])
+                pull = yield self._find(parent["sha"])
+
+                if pull is not None:
+                    break
+
+        if pull is None:
+            exc = NoSuchPullRequest(self.sha)
+        else:
+            exc = gen.Return(pull)
+
+        raise exc
 
 
 class Application(web.Application):
@@ -52,6 +107,13 @@ class Application(web.Application):
         name = self._secret_builder_to_repo[secret][builder]
         return self.config["repo"][name]
 
+    def find_pull(self, repo, sha):
+        """Find pull request in repository via commit sha.
+
+        :rtype: :class:`asyncat.repository.PullRequest`
+        """
+        return PullRequestFinder(repo, sha).find()
+
 
 def main():
     app = Application(sys.argv[1])
@@ -66,4 +128,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()      # pragma: no cover

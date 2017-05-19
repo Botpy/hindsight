@@ -10,6 +10,8 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
+import mock
+
 from tornado import concurrent
 from tornado import testing
 
@@ -18,6 +20,30 @@ from hindsight.app import Application
 
 class HindsightTestCase(testing.AsyncHTTPTestCase):
     """Base class of test cases."""
+    def setUp(self):
+        """Override setUp."""
+        super(HindsightTestCase, self).setUp()
+        self.__patchers = {}
+
+    def tearDown(self):
+        """Override tearDown to stop patchers."""
+        super(HindsightTestCase, self).tearDown()
+
+        for p in self.__patchers.values():
+            p.stop()
+
+    def auto_patch(self, spec, *args, **kwargs):
+        """Returns mock object and stop patch when tear down."""
+        patcher = mock.patch(spec, *args, **kwargs)
+
+        mock_obj = patcher.start()
+        self.__patchers[mock_obj] = patcher
+        return mock_obj
+
+    def stop_patch(self, mock_obj):
+        """Stop patch via mock object."""
+        self.__patchers.pop(mock_obj).stop()
+
     def get_file_path(self, filename):
         """Returns file's path in tests directory."""
         crt = os.path.abspath(os.path.dirname(__file__))
