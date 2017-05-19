@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/coldnight/hindsight.svg?branch=master
+    :target: https://travis-ci.org/coldnight/hindsight
+
+.. image:: https://codecov.io/gh/coldnight/hindsight/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/coldnight/hindsight
+
 Hindsight
 =========
 
