@@ -43,7 +43,6 @@ class PullRequestFinder(object):
         """
         # Try use build's sha to find pull request.
         resp = yield self.repo.search_pulls(sha)
-        print(resp.data)
         if resp.data["total_count"] == 1:
             pull = yield self.repo.pull(resp.data["items"][0]["number"])
             raise gen.Return(pull)
@@ -57,7 +56,6 @@ class PullRequestFinder(object):
             commit = yield self.repo.commit(self.sha)
 
             for parent in commit.c["parents"]:
-                print(parent["sha"])
                 log.gen_log.info("Try use <%s> parent commit <%s> find pull",
                                  self.sha, parent["sha"])
                 pull = yield self._find(parent["sha"])
