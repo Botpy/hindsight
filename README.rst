@@ -41,16 +41,16 @@ How to configure
 
 2. Add a Webhook to your continuous integration service:
 
-    hindsight supports deployment via buildbot, insert the following code to the `master.cfg` file:
+   hindsight supports deployment via buildbot, insert the following code to the `master.cfg` file:
 
-    .. code:: python
+   .. code:: python
 
-        from buildbot.status.status_push import HttpStatusPush
+       from buildbot.status.status_push import HttpStatusPush
 
-        c['status'].append(HttpStatusPush(
-            serverUrl='http://HOST:PORT/deployment',
-            extra_post_params={'secret': 'repo.NAME.secret in cfg.toml'},
-        ))
+       c['status'].append(HttpStatusPush(
+           serverUrl='http://HOST:PORT/deployment',
+           extra_post_params={'secret': 'repo.NAME.secret in cfg.toml'},
+       ))
 
 
 
