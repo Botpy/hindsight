@@ -61,7 +61,7 @@ class PullRequestFinder(object):
             if len(commit.c["parents"]) == 2:
                 parent = commit.c.parents[1]
                 log.gen_log.info("Try use <%s> parent commit <%s> find pull",
-                                 self.sha, ["sha"])
+                                 self.sha, parent["sha"])
                 pull = yield self._find(parent["sha"])
 
         if pull is None:
