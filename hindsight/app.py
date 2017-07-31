@@ -55,13 +55,14 @@ class PullRequestFinder(object):
             # Try use parent commit to find pull request.
             commit = yield self.repo.commit(self.sha)
 
-            for parent in commit.c["parents"]:
+            # The current commit is merge commit if that have two parents,
+            # if so use the last one to find the pull requeust, because
+            # the extra merge commit can also merge the pull request.
+            if len(commit.c["parents"]) == 2:
+                parent = commit.c.parents[1]
                 log.gen_log.info("Try use <%s> parent commit <%s> find pull",
-                                 self.sha, parent["sha"])
+                                 self.sha, ["sha"])
                 pull = yield self._find(parent["sha"])
-
-                if pull is not None:
-                    break
 
         if pull is None:
             exc = NoSuchPullRequest(self.sha)
