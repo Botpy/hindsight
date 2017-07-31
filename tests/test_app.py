@@ -71,6 +71,9 @@ class PullRequestFinderTestCase(HindsightTestCase):
         commit.c = {
             "parents": [
                 {
+                    "sha": "sha"
+                },
+                {
                     "sha": "sha1"
                 }
             ]
