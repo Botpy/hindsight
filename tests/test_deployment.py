@@ -7,7 +7,7 @@ import mock
 
 from asyncat.client import GithubError
 
-from hindsight.app import NoSuchPullRequest
+from hindsight.finder import NoSuchPullRequest
 
 from . import HindsightTestCase
 
@@ -42,7 +42,7 @@ class BuildbotTestCase(HindsightTestCase):
         resp = self._push()
         self.assertEqual(resp.code, 404)
 
-    @mock.patch("hindsight.app.PullRequestFinder.find", autospec=True)
+    @mock.patch("hindsight.finder.PullRequestFinder.find", autospec=True)
     def test_find_pull_via_sha(self, mock_find):
         mock_pull_cls = mock.create_autospec("asyncat.repository.PullRequest")
         mock_pull = mock_pull_cls.return_value

@@ -14,6 +14,8 @@ from tornado.log import gen_log
 from asyncat.repository import Repository
 from asyncat.client import GithubError
 
+from .finder import NoSuchPullRequest
+
 
 class BuildStatus(enum.Enum):
     unknow = "unknow"
@@ -177,8 +179,6 @@ class DeploymentHandler(web.RequestHandler):
 
     @gen.coroutine
     def _on_build(self, hook, build):
-        from .app import NoSuchPullRequest
-
         repo = self._get_repo(hook, build)
 
         gen_log.info("Try find pull requset via %s in %s/%s", build.get_sha(),
