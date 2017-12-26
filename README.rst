@@ -43,6 +43,9 @@ How to configure
 
    hindsight supports deployment via buildbot, insert the following code to the `master.cfg` file:
 
+
+   Buildbot 8:
+
    .. code:: python
 
        from buildbot.status.status_push import HttpStatusPush
@@ -52,6 +55,21 @@ How to configure
            extra_post_params={'secret': 'repo.NAME.secret in cfg.toml'},
        ))
 
+   Buildbot 9:
+
+   .. code:: python
+
+       from buildbot.plugins import reporters
+
+       c['services'] = []
+
+       sp = reporters.HttpStatusPush(
+            serverUrl="http://HOST:PORT/deployment",
+            wantProperties=True,
+            user="buildbot",
+            password="repo.NAME.secret in cfg.toml",
+        )
+        c['services'].append(sp)
 
 
 How to run
