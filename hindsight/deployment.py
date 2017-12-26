@@ -167,7 +167,7 @@ class BuildbotWebhook(BaseCIWebhook):
         :rtype: :class:`BuildbotBuild`
         """
         if self.is_nine:
-            payload = json.loads(self.handler.request.body)
+            payload = json.loads(self.handler.request.body.decode("utf8"))
             payload["is_nine"] = self.is_nine
             build = BuildbotBuild(payload)
             if build.is_valid():
