@@ -1,0 +1,124 @@
+{
+    "buildid": 5,
+    "number": 5,
+    "builderid": 1,
+    "buildrequestid": 5,
+    "workerid": 1,
+    "masterid": 1,
+    "started_at": 1514173544,
+    "complete_at": 1514173548,
+    "complete": true,
+    "state_string": "build successful",
+    "results": 0,
+    "properties": {
+        "reason": [
+            "force build",
+            "Force Build Form"
+        ],
+        "owner": [
+            "",
+            "Force Build Form"
+        ],
+        "scheduler": [
+            "force",
+            "Scheduler"
+        ],
+        "buildername": [
+            "rundeploy",
+            "Builder"
+        ],
+        "slavename": [
+            "example-worker",
+            "Worker (deprecated)"
+        ],
+        "workername": [
+            "example-worker",
+            "Worker"
+        ],
+        "buildnumber": [
+            5,
+            "Build"
+        ],
+        "branch": [
+            "",
+            "Build"
+        ],
+        "revision": [
+            "",
+            "Build"
+        ],
+        "repository": [
+            "",
+            "Build"
+        ],
+        "codebase": [
+            "",
+            "Build"
+        ],
+        "project": [
+            "",
+            "Build"
+        ],
+        "owners": [
+            [
+                ""
+            ],
+            "Build"
+        ],
+        "builddir": [
+            "/Users/wh/jobs/ci/bb-worker/rundeploy",
+            "Worker"
+        ],
+        "got_revision": [
+            "7f8e719e30f3f6b98558541d21dc8b589a4131be",
+            "Git"
+        ]
+    },
+    "buildrequest": {
+        "buildrequestid": 5,
+        "buildsetid": 5,
+        "builderid": 1,
+        "priority": 0,
+        "claimed": true,
+        "claimed_at": 1514173544,
+        "claimed_by_masterid": 1,
+        "complete": false,
+        "results": -1,
+        "submitted_at": 1514173544,
+        "complete_at": null,
+        "waited_for": false
+    },
+    "buildset": {
+        "external_idstring": null,
+        "reason": "rebuild",
+        "submitted_at": 1514173544,
+        "complete": false,
+        "complete_at": null,
+        "results": -1,
+        "bsid": 5,
+        "sourcestamps": [
+            {
+                "ssid": 1,
+                "branch": "",
+                "revision": "",
+                "project": "",
+                "repository": "",
+                "codebase": "",
+                "created_at": 1514172504,
+                "patch": null
+            }
+        ],
+        "parent_buildid": null,
+        "parent_relationship": null
+    },
+    "builder": {
+        "builderid": 1,
+        "name": "rundeploy",
+        "masterids": [
+            1
+        ],
+        "description": null,
+        "tags": []
+    },
+    "url": "http://localhost:8010/#builders/1/builds/5"
+}
